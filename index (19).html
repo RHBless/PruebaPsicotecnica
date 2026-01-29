@@ -1,0 +1,1884 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba Psicotécnica - Organización Bless</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1A3A52;
+            --secondary: #4A9FBE;
+            --accent: #C9A961;
+            --success: #51cf66;
+            --warning: #ffd43b;
+            --text: #2c3e50;
+            --light: #f8f9fa;
+            --border: #dee2e6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: 
+                linear-gradient(135deg, rgba(26, 58, 82, 0.5) 0%, rgba(74, 159, 190, 0.5) 100%),
+                url('./fondo.jpg') fixed center/cover;
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(184, 167, 217, 0.15);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 40px);
+        }
+
+        /* Welcome Page - TARJETA 2 COLUMNAS */
+        .welcome-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(26, 58, 82, 0.25);
+            overflow: hidden;
+            max-width: 900px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .welcome-left {
+            background: linear-gradient(135deg, #1A3A52 0%, #2D5A7B 100%);
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-left::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            background: rgba(201, 169, 97, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .welcome-left::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 250px;
+            height: 250px;
+            background: rgba(74, 159, 190, 0.1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .welcome-left-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-logo {
+            width: 120px;
+            height: auto;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+        }
+
+        .welcome-left h1 {
+            font-size: 36px;
+            color: #C9A961;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .welcome-left h2 {
+            font-size: 14px;
+            color: #4A9FBE;
+            margin: 0 0 30px 0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .welcome-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #E8F1F6;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .feature-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .welcome-right {
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-right h3 {
+            font-size: 22px;
+            color: #1A3A52;
+            margin: 0 0 25px 0;
+            font-weight: 700;
+        }
+
+        .instructions-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 25px 0;
+        }
+
+        .instructions-list li {
+            font-size: 13px;
+            color: #2c3e50;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            display: flex;
+            gap: 10px;
+            padding-left: 0;
+        }
+
+        .instructions-list li:before {
+            content: "✓";
+            color: #4A9FBE;
+            font-weight: bold;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .instructions-list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .timer-info {
+            background: linear-gradient(135deg, #F5F9FC 0%, #EBF3F8 100%);
+            border-left: 4px solid #C9A961;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .timer-info strong {
+            display: block;
+            color: #1A3A52;
+            font-size: 14px;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .timer-info p {
+            font-size: 12px;
+            color: #5D6B7B;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .welcome-right .btn-start {
+            background: linear-gradient(135deg, #1A3A52, #2D5A7B);
+            color: white;
+            border: none;
+            padding: 15px 35px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            box-shadow: 0 4px 15px rgba(26, 58, 82, 0.2);
+            align-self: flex-start;
+        }
+
+        .welcome-right .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 58, 82, 0.3);
+            background: linear-gradient(135deg, #0F2536, #1A3A52);
+        }
+
+        @media (max-width: 768px) {
+            .welcome-card {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-left {
+                padding: 40px 30px;
+            }
+
+            .welcome-left h1 {
+                font-size: 28px;
+            }
+
+            .welcome-right {
+                padding: 40px 30px;
+            }
+
+            .welcome-right h3 {
+                font-size: 18px;
+            }
+        }
+
+        .test-container {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .test-container.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .test-container .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header {
+            background: linear-gradient(135deg, #1A3A52 0%, #2D5A7B 100%);
+            color: white;
+            padding: 30px 30px 25px;
+            text-align: center;
+            border-bottom: 4px solid #C9A961;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .header-logo {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-logo img {
+            height: 50px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #C9A961;
+            margin: 0 0 8px 0;
+            line-height: 1.1;
+        }
+
+        .header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #4A9FBE;
+            margin: 0 0 12px 0;
+            letter-spacing: 0.5px;
+            text-transform: capitalize;
+        }
+
+        .header .subtitle {
+            font-size: 13px;
+            color: #E8F1F6;
+            margin: 0;
+            opacity: 0.95;
+        }
+
+        .header-timer {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid #C9A961;
+            border-radius: 8px;
+            min-width: 90px;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-timer .timer-icon {
+            font-size: 18px;
+        }
+
+        .header-timer .timer-display {
+            font-size: 16px;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            color: #C9A961;
+            background: transparent;
+            padding: 0;
+        }
+
+        .header-timer .timer-label {
+            font-size: 10px;
+            color: #E8F1F6;
+        }
+
+        /* Timer */
+        .timer-section {
+            display: none;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            background: #E8F1F6;
+            padding: 20px 30px;
+            border-bottom: 1px solid #D4E8F0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1A3A52;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #D4E8F0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1A3A52, #4A9FBE);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Content */
+        .content {
+            padding: 40px 30px;
+            max-height: 600px;
+            overflow-y: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section {
+            margin-bottom: 50px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1A3A52;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4A9FBE;
+        }
+
+        .question-block {
+            margin-bottom: 35px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #1A3A52;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 32px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-right: 12px;
+        }
+
+        .question-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1A3A52;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        /* Options */
+        .options-group {
+            margin-left: 44px;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background: #E8F1F6;
+            border-color: #4A9FBE;
+        }
+
+        .option input[type="radio"],
+        .option input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 3px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #4A9FBE;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 14px;
+            color: #1A3A52;
+        }
+
+        .option input[type="radio"]:checked ~ label,
+        .option input[type="checkbox"]:checked ~ label {
+            font-weight: 600;
+            color: #4A9FBE;
+        }
+
+        /* Textarea for explanations */
+        .explanation-box {
+            margin-left: 44px;
+            margin-top: 12px;
+        }
+
+        .explanation-box label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #4A9FBE;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .explanation-box textarea,
+        .explanation-box input[type="text"],
+        .explanation-box input[type="email"],
+        .explanation-box input[type="tel"],
+        .explanation-box select {
+            width: 100%;
+            min-height: 80px;
+            padding: 12px;
+            border: 2px solid #D4E8F0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 13px;
+            resize: vertical;
+            transition: border-color 0.2s ease;
+            color: #1A3A52;
+        }
+
+        .explanation-box input[type="text"],
+        .explanation-box input[type="email"],
+        .explanation-box input[type="tel"],
+        .explanation-box select {
+            min-height: auto;
+            height: 44px;
+        }
+
+        .explanation-box textarea:focus,
+        .explanation-box input:focus,
+        .explanation-box select:focus {
+            outline: none;
+            border-color: #4A9FBE;
+            box-shadow: 0 0 0 3px rgba(74, 159, 190, 0.1);
+        }
+
+        /* Footer Navigation */
+        .footer {
+            background: #F9F7FC;
+            padding: 20px 30px;
+            border-top: 1px solid #E8DFF5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            margin-top: auto;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #1A3A52, #2D5A7B);
+            color: white;
+            border: 2px solid #C9A961;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 58, 82, 0.3);
+            background: linear-gradient(135deg, #0F2536, #1A3A52);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #1A3A52;
+            border: 2px solid #1A3A52;
+        }
+
+        .btn-secondary:hover {
+            background: #E8F1F6;
+            border-color: #4A9FBE;
+            color: #4A9FBE;
+        }
+
+        .btn-danger {
+            background: #C9A961;
+            color: #1A3A52;
+            border: 2px solid #C9A961;
+        }
+
+        .btn-danger:hover {
+            background: #B8955A;
+            border-color: #B8955A;
+        }
+
+        .section-counter {
+            font-size: 13px;
+            color: #1A3A52;
+            font-weight: 600;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(184, 167, 217, 0.3);
+        }
+
+        .modal-content h2 {
+            font-size: 24px;
+            color: #1A3A52;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-warning {
+            background: #FFF4E6;
+            color: #C67C1C;
+            border: 1px solid #FFD9B8;
+        }
+
+        .alert-danger {
+            background: #FFE6E6;
+            color: #C63939;
+            border: 1px solid #FFC7C7;
+        }
+
+        /* Scrollbar */
+        .content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .content::-webkit-scrollbar-track {
+            background: #F9F7FC;
+        }
+
+        .content::-webkit-scrollbar-thumb {
+            background: #D4C5E8;
+            border-radius: 4px;
+        }
+
+        .content::-webkit-scrollbar-thumb:hover {
+            background: #B8A7D9;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .timer-section,
+            .footer,
+            .nav-buttons {
+                display: none !important;
+            }
+            .content {
+                max-height: none;
+                overflow: visible;
+            }
+            .section {
+                display: block !important;
+                page-break-inside: avoid;
+                margin-bottom: 30px;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 15px;
+                text-align: center;
+                align-items: center;
+            }
+
+            .header-content {
+                width: 100%;
+            }
+
+            .header-content h1 {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .header-content h2 {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+
+            .header .subtitle {
+                font-size: 12px;
+            }
+
+            .header-timer {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 15px;
+                min-width: 75px;
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+
+            .header-timer .timer-display {
+                font-size: 14px;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+
+            button {
+                font-size: 12px;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+    </style>
+</head>
+<body>
+    <!-- Welcome Page -->
+    <div class="welcome-page" id="welcomePage">
+        <div class="welcome-card">
+            <div class="welcome-left">
+                <div class="welcome-left-content">
+                    <img src="./logo.png" alt="Bless Logo" class="welcome-logo">
+                    <h1>Organización Bless</h1>
+                    <h2>Gestión Humana</h2>
+                    
+                    <div class="welcome-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">📋</div>
+                            <div>Evaluación integral del candidato</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏱️</div>
+                            <div>30 minutos de duración</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">✓</div>
+                            <div>Sin respuestas correctas o incorrectas</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div>Evaluación de competencias clave</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="welcome-right">
+                <h3>Instrucciones</h3>
+                
+                <ul class="instructions-list">
+                    <li>Lee cuidadosamente cada pregunta</li>
+                    <li>Selecciona la opción que mejor te represente</li>
+                    <li>Justifica con un ejemplo real de tu experiencia</li>
+                    <li>Sé honesto y detallado en tus respuestas</li>
+                    <li>Se evaluará coherencia y alineación con el rol</li>
+                </ul>
+
+                <div class="timer-info">
+                    <strong>⏱️ Tiempo disponible: 30 minutos</strong>
+                    <p>El cronómetro iniciará cuando presiones el botón. Podrás ver el tiempo restante en la parte superior.</p>
+                </div>
+
+                <button class="btn-start" onclick="startTest()">Comenzar Evaluación →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Test Container -->
+    <div class="test-container" id="testContainer">
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>🏢 Organización Bless</h1>
+                <h2>Área de Gestión Humana</h2>
+                <p class="subtitle">Prueba Psicotécnica - Ejecutivo de Ventas / Ejecutivo de Cuenta Nacional</p>
+            </div>
+            <div class="header-timer">
+                <div class="timer-icon">⏱️</div>
+                <div class="timer-display" id="timerDisplay">30:00</div>
+                <div class="timer-label">Tiempo</div>
+            </div>
+        </div>
+
+
+
+        <div class="progress-section">
+            <div class="progress-label">Progreso</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content" id="content">
+            <!-- Sección 1 -->
+            <div class="section active" data-section="1">
+                <div class="section-title">📋 Sección 1: Perfil Personal y Estilo de Trabajo</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">1</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Me considero una persona organizada y disciplinada en la gestión de mi agenda comercial.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q1" id="q1_a" value="Siempre">
+                                    <label for="q1_a">Siempre</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q1" id="q1_b" value="Casi siempre">
+                                    <label for="q1_b">Casi siempre</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q1" id="q1_c" value="Algunas veces">
+                                    <label for="q1_c">Algunas veces</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q1" id="q1_d" value="Rara vez">
+                                    <label for="q1_d">Rara vez</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q1" id="q1_e" value="Nunca">
+                                    <label for="q1_e">Nunca</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique por qué y describa cómo organiza normalmente su agenda y visitas:</label>
+                                <textarea name="q1_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">2</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Cuando trabajo en campo, suelo planificar mis rutas con base en objetivos claros y medibles.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q2" id="q2_a" value="Siempre">
+                                    <label for="q2_a">Siempre</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q2" id="q2_b" value="Casi siempre">
+                                    <label for="q2_b">Casi siempre</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q2" id="q2_c" value="Algunas veces">
+                                    <label for="q2_c">Algunas veces</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q2" id="q2_d" value="Rara vez">
+                                    <label for="q2_d">Rara vez</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q2" id="q2_e" value="Nunca">
+                                    <label for="q2_e">Nunca</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique cómo define sus prioridades y qué variables tiene en cuenta:</label>
+                                <textarea name="q2_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">3</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">¿Cómo reacciona frente a la presión por cumplimiento de metas comerciales?</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q3" id="q3_a" value="La presión me motiva y mejora mi desempeño">
+                                    <label for="q3_a">La presión me motiva y mejora mi desempeño</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q3" id="q3_b" value="Me adapto con algunas dificultades">
+                                    <label for="q3_b">Me adapto con algunas dificultades</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q3" id="q3_c" value="Me genera estrés que afecta mi desempeño">
+                                    <label for="q3_c">Me genera estrés que afecta mi desempeño</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q3" id="q3_d" value="Depende del tipo de meta y del acompañamiento">
+                                    <label for="q3_d">Depende del tipo de meta y del acompañamiento</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique con un ejemplo real:</label>
+                                <textarea name="q3_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2 -->
+            <div class="section" data-section="2">
+                <div class="section-title">📚 Sección 2: Experiencia y Formación Aplicada</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">4</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Cuento con experiencia gestionando clientes de forma presencial en retail o canal tradicional.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q4" id="q4_a" value="Amplia experiencia (+3 años)">
+                                    <label for="q4_a">Amplia experiencia (+3 años)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q4" id="q4_b" value="Experiencia intermedia (1–3 años)">
+                                    <label for="q4_b">Experiencia intermedia (1–3 años)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q4" id="q4_c" value="Experiencia básica (<1 año)">
+                                    <label for="q4_c">Experiencia básica (<1 año)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q4" id="q4_d" value="No tengo experiencia directa">
+                                    <label for="q4_d">No tengo experiencia directa</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Describa el tipo de clientes y responsabilidades asumidas:</label>
+                                <textarea name="q4_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">5</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">He recibido formación o capacitación en ventas consultivas, retail o análisis comercial.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q5" id="q5_a" value="Formación formal certificada">
+                                    <label for="q5_a">Formación formal certificada</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q5" id="q5_b" value="Capacitaciones internas o cursos cortos">
+                                    <label for="q5_b">Capacitaciones internas o cursos cortos</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q5" id="q5_c" value="Aprendizaje empírico">
+                                    <label for="q5_c">Aprendizaje empírico</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q5" id="q5_d" value="No he recibido formación específica">
+                                    <label for="q5_d">No he recibido formación específica</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique cómo ha aplicado ese conocimiento en su experiencia laboral:</label>
+                                <textarea name="q5_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 3 -->
+            <div class="section" data-section="3">
+                <div class="section-title">💼 Sección 3: Competencias Técnicas Comerciales</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">6</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Cuando visito un punto de venta, analizo más allá del pedido inmediato.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q6" id="q6_a" value="Siempre analizo rotación, espacio y rentabilidad">
+                                    <label for="q6_a">Siempre analizo rotación, espacio y rentabilidad</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q6" id="q6_b" value="Lo hago con algunos clientes">
+                                    <label for="q6_b">Lo hago con algunos clientes</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q6" id="q6_c" value="Me enfoco principalmente en la venta del pedido">
+                                    <label for="q6_c">Me enfoco principalmente en la venta del pedido</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q6" id="q6_d" value="Rara vez realizo análisis adicional">
+                                    <label for="q6_d">Rara vez realizo análisis adicional</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique qué variables observa normalmente en un PDV:</label>
+                                <textarea name="q6_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">7</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">¿Qué tan familiarizado(a) está con el análisis de indicadores comerciales?</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q7" id="q7_a" value="Manejo y analizo indicadores frecuentemente">
+                                    <label for="q7_a">Manejo y analizo indicadores frecuentemente</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q7" id="q7_b" value="Los reviso cuando me los solicitan">
+                                    <label for="q7_b">Los reviso cuando me los solicitan</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q7" id="q7_c" value="Conozco algunos indicadores básicos">
+                                    <label for="q7_c">Conozco algunos indicadores básicos</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q7" id="q7_d" value="No tengo experiencia en análisis de indicadores">
+                                    <label for="q7_d">No tengo experiencia en análisis de indicadores</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Indique qué indicadores ha utilizado y con qué objetivo:</label>
+                                <textarea name="q7_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">8</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">En cuanto al manejo de herramientas como Excel u otras de reporte:</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q8" id="q8_a" value="Avanzado (tablas dinámicas, análisis)">
+                                    <label for="q8_a">Avanzado (tablas dinámicas, análisis)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q8" id="q8_b" value="Intermedio (filtros, fórmulas básicas)">
+                                    <label for="q8_b">Intermedio (filtros, fórmulas básicas)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q8" id="q8_c" value="Básico">
+                                    <label for="q8_c">Básico</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q8" id="q8_d" value="No utilizo herramientas de análisis">
+                                    <label for="q8_d">No utilizo herramientas de análisis</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique cómo las ha utilizado en su rol comercial:</label>
+                                <textarea name="q8_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4 -->
+            <div class="section" data-section="4">
+                <div class="section-title">🤝 Sección 4: Negociación y Gestión del Cliente</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">9</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Cuando un cliente no quiere ampliar espacios o surtido, mi reacción habitual es:</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q9" id="q9_a" value="Analizar datos y presentar una propuesta argumentada">
+                                    <label for="q9_a">Analizar datos y presentar una propuesta argumentada</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q9" id="q9_b" value="Insistir desde la relación comercial">
+                                    <label for="q9_b">Insistir desde la relación comercial</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q9" id="q9_c" value="Aceptar la negativa y continuar con otro cliente">
+                                    <label for="q9_c">Aceptar la negativa y continuar con otro cliente</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q9" id="q9_d" value="Escalar la situación a mi jefe inmediato">
+                                    <label for="q9_d">Escalar la situación a mi jefe inmediato</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique un caso real:</label>
+                                <textarea name="q9_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">10</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Me considero una persona hábil negociando no solo precio, sino espacio y exhibición.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q10" id="q10_a" value="Totalmente de acuerdo">
+                                    <label for="q10_a">Totalmente de acuerdo</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q10" id="q10_b" value="De acuerdo">
+                                    <label for="q10_b">De acuerdo</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q10" id="q10_c" value="Parcialmente de acuerdo">
+                                    <label for="q10_c">Parcialmente de acuerdo</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q10" id="q10_d" value="En desacuerdo">
+                                    <label for="q10_d">En desacuerdo</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique cómo suele negociar y qué argumentos utiliza:</label>
+                                <textarea name="q10_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 5 -->
+            <div class="section" data-section="5">
+                <div class="section-title">🎯 Sección 5: Visión Estratégica del Rol</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">11</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Para mí, vender significa principalmente:</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q11" id="q11_a" value="Colocar producto y cumplir cuota">
+                                    <label for="q11_a">Colocar producto y cumplir cuota</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q11" id="q11_b" value="Desarrollar al cliente a largo plazo">
+                                    <label for="q11_b">Desarrollar al cliente a largo plazo</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q11" id="q11_c" value="Asegurar rotación, rentabilidad y espacio">
+                                    <label for="q11_c">Asegurar rotación, rentabilidad y espacio</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q11" id="q11_d" value="Depende del tipo de cliente">
+                                    <label for="q11_d">Depende del tipo de cliente</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Justifique su respuesta:</label>
+                                <textarea name="q11_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">12</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Cuando identifico un problema en el punto de venta (mal surtido, baja rotación, mala exhibición):</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q12" id="q12_a" value="Propongo soluciones y hago seguimiento">
+                                    <label for="q12_a">Propongo soluciones y hago seguimiento</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q12" id="q12_b" value="Informo, pero no siempre hago seguimiento">
+                                    <label for="q12_b">Informo, pero no siempre hago seguimiento</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q12" id="q12_c" value="Solo lo reporto si afecta la venta directa">
+                                    <label for="q12_c">Solo lo reporto si afecta la venta directa</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q12" id="q12_d" value="Generalmente no lo reporto">
+                                    <label for="q12_d">Generalmente no lo reporto</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique con un ejemplo:</label>
+                                <textarea name="q12_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 6 -->
+            <div class="section" data-section="6">
+                <div class="section-title">📊 Sección 6: Autonomía, Comunicación y Reporte</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">13</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">¿Qué tan cómodo(a) se siente trabajando con mínima supervisión directa?</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q13" id="q13_a" value="Muy cómodo(a)">
+                                    <label for="q13_a">Muy cómodo(a)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q13" id="q13_b" value="Cómodo(a)">
+                                    <label for="q13_b">Cómodo(a)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q13" id="q13_c" value="Medianamente cómodo(a)">
+                                    <label for="q13_c">Medianamente cómodo(a)</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q13" id="q13_d" value="Incómodo(a)">
+                                    <label for="q13_d">Incómodo(a)</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique cómo gestiona su trabajo de forma autónoma:</label>
+                                <textarea name="q13_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">14</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">La elaboración de reportes comerciales para mí es:</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q14" id="q14_a" value="Una herramienta clave de gestión">
+                                    <label for="q14_a">Una herramienta clave de gestión</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q14" id="q14_b" value="Un requisito administrativo">
+                                    <label for="q14_b">Un requisito administrativo</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q14" id="q14_c" value="Algo que realizo solo si es obligatorio">
+                                    <label for="q14_c">Algo que realizo solo si es obligatorio</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q14" id="q14_d" value="Una dificultad para mí">
+                                    <label for="q14_d">Una dificultad para mí</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique qué tipo de información suele reportar:</label>
+                                <textarea name="q14_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 7 -->
+            <div class="section" data-section="7">
+                <div class="section-title">🌟 Sección 7: Ajuste al Perfil y Motivación</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">15</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">¿Qué lo motiva principalmente de este cargo?</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q15" id="q15_a" value="Crecimiento profesional">
+                                    <label for="q15_a">Crecimiento profesional</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q15" id="q15_b" value="Desafío estratégico">
+                                    <label for="q15_b">Desafío estratégico</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q15" id="q15_c" value="Estabilidad económica">
+                                    <label for="q15_c">Estabilidad económica</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q15" id="q15_d" value="Comisiones y beneficios">
+                                    <label for="q15_d">Comisiones y beneficios</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique su elección:</label>
+                                <textarea name="q15_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">16</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Este cargo exige viajes permanentes y trabajo 100% en campo.</div>
+                            <div class="options-group">
+                                <div class="option">
+                                    <input type="radio" name="q16" id="q16_a" value="Totalmente de acuerdo y disponible">
+                                    <label for="q16_a">Totalmente de acuerdo y disponible</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q16" id="q16_b" value="De acuerdo con algunas limitaciones">
+                                    <label for="q16_b">De acuerdo con algunas limitaciones</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q16" id="q16_c" value="Me generaría dificultades">
+                                    <label for="q16_c">Me generaría dificultades</label>
+                                </div>
+                                <div class="option">
+                                    <input type="radio" name="q16" id="q16_d" value="No se ajusta a mi situación actual">
+                                    <label for="q16_d">No se ajusta a mi situación actual</label>
+                                </div>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Explique su respuesta:</label>
+                                <textarea name="q16_exp" placeholder="Su respuesta aquí..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 8 -->
+            <div class="section" data-section="8">
+                <div class="section-title">💡 Sección 8: Caso Práctico (OBLIGATORIO)</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div class="question-number">17</div>
+                        <div style="flex: 1;">
+                            <div class="question-text">Caso: Usted visita una tienda donde sus productos tienen baja rotación, poco espacio y el cliente prioriza a la competencia.</div>
+                            <div style="background: var(--light); padding: 15px; border-left: 4px solid var(--secondary); border-radius: 4px; margin-bottom: 20px;">
+                                <p style="font-size: 13px; margin-bottom: 8px;"><strong>Describa:</strong></p>
+                                <ul style="font-size: 13px; margin-left: 20px; color: var(--text);">
+                                    <li>¿Qué información analizaría?</li>
+                                    <li>¿Qué acciones propondría?</li>
+                                    <li>¿Cómo mediría el resultado?</li>
+                                </ul>
+                            </div>
+                            <div class="explanation-box">
+                                <label>Su análisis y propuesta:</label>
+                                <textarea name="q17_exp" placeholder="Desarrolle su respuesta de manera completa..." style="min-height: 150px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Data -->
+            <div class="section" data-section="9">
+                <div class="section-title">📝 Información Personal</div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div class="explanation-box">
+                                <label>Nombre Completo:</label>
+                                <input type="text" name="candidate_name" placeholder="Su nombre completo..." style="width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 13px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div class="explanation-box">
+                                <label>Email:</label>
+                                <input type="email" name="candidate_email" placeholder="Su email..." style="width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 13px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div class="explanation-box">
+                                <label>Teléfono:</label>
+                                <input type="tel" name="candidate_phone" placeholder="Su teléfono..." style="width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 13px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-block">
+                    <div style="display: flex; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div class="explanation-box">
+                                <label>Cargo que aspira:</label>
+                                <select name="candidate_role" style="width: 100%; padding: 10px; border: 2px solid var(--border); border-radius: 6px; font-family: inherit; font-size: 13px;">
+                                    <option value="">Seleccione...</option>
+                                    <option value="Ejecutivo de Ventas">Ejecutivo de Ventas</option>
+                                    <option value="Ejecutivo de Cuenta Nacional">Ejecutivo de Cuenta Nacional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="section-counter">
+                <span id="currentSection">1</span> de <span id="totalSections">9</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-secondary" id="btnPrevious" onclick="previousSection()">← Anterior</button>
+                <button class="btn-primary" id="btnNext" onclick="nextSection()">Siguiente →</button>
+                <button class="btn-danger" id="btnSubmit" onclick="submitTest()" style="display: none;">📄 Generar PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Warning -->
+    <div class="modal" id="timeoutModal">
+        <div class="modal-content">
+            <h2>⏰ Tiempo Agotado</h2>
+            <p>Se acabó el tiempo para la prueba. El sistema generará automáticamente el PDF con las respuestas completadas.</p>
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="generatePDF()">Descargar PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmation -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h2>✅ Confirmar Envío</h2>
+            <p>¿Está seguro de que ha completado la prueba? Una vez enviada, no podrá hacer cambios.</p>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeModal('confirmModal')">Cancelar</button>
+                <button class="btn-primary" onclick="generatePDF()">Generar PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Instrucciones Envío -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <h2>✅ PDF Generado Exitosamente</h2>
+            <div style="background-color: #E8F5E9; border-left: 4px solid #4CAF50; padding: 20px; border-radius: 6px; margin: 20px 0;">
+                <p style="color: #2E7D32; font-weight: bold; margin-bottom: 15px;">¡Recuerda enviar tu PDF generado!</p>
+                
+                <div style="background-color: white; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="margin: 0 0 8px 0; font-weight: bold; color: #1A3A52;">📧 Correo de destino:</p>
+                    <p style="margin: 0 0 15px 0; color: #333; font-family: monospace; font-size: 14px; background: #F5F5F5; padding: 10px; border-radius: 4px;">
+                        Recursoshumanos@organizacionbless.com.co
+                    </p>
+                    
+                    <p style="margin: 0 0 8px 0; font-weight: bold; color: #1A3A52;">📋 Asunto del correo:</p>
+                    <p id="emailSubject" style="margin: 0; color: #333; font-family: monospace; font-size: 14px; background: #F5F5F5; padding: 10px; border-radius: 4px;">
+                        Prueba Psicotécnica - [Nombre del candidato]
+                    </p>
+                </div>
+
+                <div style="background-color: #FFF3E0; border-left: 4px solid #FF9800; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
+                    <p style="margin: 0; color: #E65100; font-size: 13px;">
+                        <strong>⚠️ Importante:</strong> Adjunta el PDF descargado al correo. El archivo se llama "Prueba_Psicotecnica_[Tu Nombre]_[Fecha].pdf"
+                    </p>
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="closeModal('successModal'); location.reload();">Entendido</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Configuration
+        const TOTAL_TIME = 60 * 60; // 60 minutes in seconds
+        const TOTAL_SECTIONS = 9;
+        let currentSection = 1;
+        let timeRemaining = TOTAL_TIME;
+        let timerInterval = null;
+
+        function startTest() {
+            document.getElementById('welcomePage').style.display = 'none';
+            document.getElementById('testContainer').classList.add('active');
+            startTimer();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            setActiveSection(1);
+        });
+
+        // Timer Functions
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeRemaining--;
+                updateTimerDisplay();
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    openModal('timeoutModal');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timerDisplay').textContent = 
+                String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+
+            if (timeRemaining <= 300) {
+                document.getElementById('timerDisplay').style.color = '#ff6b6b';
+            }
+        }
+
+        // Navigation
+        function nextSection() {
+            if (currentSection < TOTAL_SECTIONS) {
+                currentSection++;
+                setActiveSection(currentSection);
+            } else {
+                openModal('confirmModal');
+            }
+        }
+
+        function previousSection() {
+            if (currentSection > 1) {
+                currentSection--;
+                setActiveSection(currentSection);
+            }
+        }
+
+        function setActiveSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            
+            // Show current section
+            document.querySelectorAll('.section')[section - 1].classList.add('active');
+            
+            // Update counter
+            document.getElementById('currentSection').textContent = section;
+            
+            // Update buttons
+            document.getElementById('btnPrevious').disabled = section === 1;
+            
+            if (section === TOTAL_SECTIONS) {
+                document.getElementById('btnNext').style.display = 'none';
+                document.getElementById('btnSubmit').style.display = 'block';
+            } else {
+                document.getElementById('btnNext').style.display = 'block';
+                document.getElementById('btnSubmit').style.display = 'none';
+            }
+            
+            updateProgress();
+            
+            // Scroll al inicio de la sección (IMPORTANTE)
+            setTimeout(() => {
+                document.querySelector('.content').scrollTop = 0;
+            }, 50);
+        }
+
+        function updateProgress() {
+            const percentage = (currentSection / TOTAL_SECTIONS) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Form Submission
+        function submitTest() {
+            openModal('confirmModal');
+        }
+
+        function generatePDF() {
+            clearInterval(timerInterval);
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            
+            // Usar fuente con soporte UTF-8
+            doc.setFont('Helvetica');
+            
+            let yPosition = 15;
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 12;
+            const contentWidth = pageWidth - (margin * 2);
+            
+            function checkPageBreak(spaceNeeded) {
+                if (yPosition + spaceNeeded > pageHeight - 10) {
+                    doc.addPage();
+                    yPosition = 15;
+                }
+            }
+            
+            // HEADER SIMPLE
+            doc.setFillColor(26, 58, 82);
+            doc.rect(margin, 8, contentWidth, 18, 'F');
+            
+            doc.setFontSize(14);
+            doc.setTextColor(201, 169, 97);
+            doc.setFont('Helvetica', 'bold');
+            doc.text('BLESS - Organizacion', margin + 3, 14);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(74, 159, 190);
+            doc.setFont('Helvetica', 'bold');
+            doc.text('Area de Gestion Humana', margin + 3, 19);
+            
+            doc.setFontSize(9);
+            doc.setTextColor(232, 241, 246);
+            doc.setFont('Helvetica', 'normal');
+            doc.text('Prueba Psicotecnica - Ejecutivo de Ventas', margin + 3, 24);
+            
+            yPosition = 32;
+            
+            // INFO CANDIDATO
+            const nameField = document.querySelector('input[name="candidate_name"]');
+            if (nameField && nameField.value) {
+                doc.setFillColor(26, 58, 82);
+                doc.rect(margin, yPosition - 5, contentWidth, 22, 'F');
+                
+                doc.setFontSize(10);
+                doc.setTextColor(255, 255, 255);
+                doc.setFont('Helvetica', 'bold');
+                doc.text('CANDIDATO: ' + nameField.value, margin + 3, yPosition);
+                
+                const email = document.querySelector('input[name="candidate_email"]').value;
+                const phone = document.querySelector('input[name="candidate_phone"]').value;
+                const role = document.querySelector('select[name="candidate_role"]').value;
+                const date = new Date().toLocaleDateString('es-ES');
+                
+                doc.setFontSize(9);
+                doc.setFont('Helvetica', 'normal');
+                doc.text('Email: ' + email, margin + 3, yPosition + 5);
+                doc.text('Telefono: ' + phone, margin + 3, yPosition + 10);
+                doc.text('Cargo: ' + role, margin + 3, yPosition + 15);
+                doc.text('Fecha: ' + date, margin + 3, yPosition + 20);
+                
+                yPosition += 28;
+            }
+            
+            // SECCIONES (EXCLUIR SECCION 9 - INFORMACION PERSONAL)
+            document.querySelectorAll('.section').forEach((section, secIndex) => {
+                // Saltar sección 9 (Información Personal)
+                if (section.getAttribute('data-section') === '9') {
+                    return;
+                }
+                
+                const sectionTitle = section.querySelector('.section-title');
+                let sectionTitleText = sectionTitle ? sectionTitle.textContent : 'Seccion ' + (secIndex + 1);
+                // Limpiar caracteres especiales
+                sectionTitleText = sectionTitleText.replace(/[^\x20-\x7E\u00C0-\u00FF]/g, '');
+                
+                checkPageBreak(8);
+                doc.setFontSize(11);
+                doc.setTextColor(26, 58, 82);
+                doc.setFont('Helvetica', 'bold');
+                doc.text(sectionTitleText, margin, yPosition);
+                
+                doc.setDrawColor(74, 159, 190);
+                doc.setLineWidth(0.5);
+                doc.line(margin, yPosition + 2, pageWidth - margin, yPosition + 2);
+                yPosition += 8;
+                
+                // Preguntas
+                const questions = section.querySelectorAll('.question-block');
+                questions.forEach((question, qIndex) => {
+                    const qNumber = question.querySelector('.question-number');
+                    const qText = question.querySelector('.question-text');
+                    const qNum = qNumber ? qNumber.textContent : (qIndex + 1);
+                    let qContent = qText ? qText.textContent : '';
+                    qContent = qContent.replace(/[^\x20-\x7E\u00C0-\u00FF]/g, '');
+                    
+                    checkPageBreak(6);
+                    
+                    // Número pregunta
+                    doc.setFillColor(26, 58, 82);
+                    doc.circle(margin + 2, yPosition - 1, 2.5, 'F');
+                    doc.setFontSize(8);
+                    doc.setTextColor(255, 255, 255);
+                    doc.setFont('Helvetica', 'bold');
+                    doc.text(qNum.toString(), margin + 1.8, yPosition + 0.3, { align: 'center' });
+                    
+                    // Texto pregunta
+                    doc.setFontSize(9);
+                    doc.setTextColor(26, 58, 82);
+                    doc.setFont('Helvetica', 'bold');
+                    const qLines = doc.splitTextToSize(qContent, contentWidth - 8);
+                    doc.text(qLines, margin + 8, yPosition);
+                    yPosition += (qLines.length * 3) + 2;
+                    
+                    // OPCION SELECCIONADA O "NO MARCO"
+                    const options = question.querySelectorAll('.option');
+                    let foundChecked = false;
+                    
+                    options.forEach(opt => {
+                        const input = opt.querySelector('input[type="radio"], input[type="checkbox"]');
+                        const label = opt.querySelector('label');
+                        
+                        if (input && label && input.checked) {
+                            foundChecked = true;
+                            checkPageBreak(3);
+                            let optText = label.textContent;
+                            optText = optText.replace(/[^\x20-\x7E\u00C0-\u00FF]/g, '');
+                            
+                            doc.setFont('Helvetica', 'bold');
+                            doc.setTextColor(26, 58, 82);
+                            doc.setFontSize(9);
+                            doc.text('[X] ' + optText, margin + 8, yPosition);
+                            yPosition += 4;
+                        }
+                    });
+                    
+                    // Si no marcó nada, mostrar "No marco"
+                    if (!foundChecked) {
+                        checkPageBreak(3);
+                        doc.setFont('Helvetica', 'bold');
+                        doc.setTextColor(200, 0, 0);
+                        doc.setFontSize(9);
+                        doc.text('[ ] No marco respuesta', margin + 8, yPosition);
+                        yPosition += 4;
+                    }
+                    
+                    // Respuesta texto
+                    const textarea = question.querySelector('.explanation-box textarea');
+                    if (textarea && textarea.value) {
+                        checkPageBreak(6);
+                        let respuesta = textarea.value.trim();
+                        respuesta = respuesta.replace(/[^\x20-\x7E\u00C0-\u00FF\n]/g, '');
+                        
+                        doc.setFontSize(8);
+                        doc.setTextColor(74, 159, 190);
+                        doc.setFont('Helvetica', 'bold');
+                        doc.text('RESPUESTA:', margin + 8, yPosition);
+                        yPosition += 3;
+                        
+                        doc.setFontSize(8);
+                        doc.setTextColor(51, 51, 51);
+                        doc.setFont('Helvetica', 'normal');
+                        const respLines = doc.splitTextToSize(respuesta, contentWidth - 10);
+                        doc.text(respLines, margin + 10, yPosition);
+                        yPosition += (respLines.length * 3.5) + 3;
+                    }
+                    
+                    yPosition += 2;
+                });
+            });
+            
+            // Guardar
+            const nombre = nameField && nameField.value ? nameField.value : 'Candidato';
+            const fileName = 'Prueba_Psicotecnica_' + nombre + '_' + new Date().toISOString().split('T')[0] + '.pdf';
+            doc.save(fileName);
+            
+            // Actualizar asunto del correo en el modal
+            document.getElementById('emailSubject').textContent = 'Prueba Psicotecnica - ' + nombre;
+            
+            // Cerrar modales anteriores y mostrar modal de éxito
+            closeModal('confirmModal');
+            closeModal('timeoutModal');
+            openModal('successModal');
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSection();
+            if (e.key === 'ArrowLeft') previousSection();
+        });
+    </script>
+</body>
+</html>
