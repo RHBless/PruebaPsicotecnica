@@ -1567,7 +1567,7 @@
                     <div style="background-color: white; border: 2px solid #4A9FBE; padding: 14px; border-radius: 8px; margin-left: 44px;">
                         <p style="margin: 0 0 6px 0; color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px;">Correo de Recursos Humanos</p>
                         <p style="margin: 0; color: #1A3A52; font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold;">
-                            Recursoshumanos@organizacionbless.com.co
+                            <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="2c7e494f595e5f435f4459414d42435f6c435e4b4d4245564d4f4543424e40495f5f024f4341024f43">[email&#160;protected]</a>
                         </p>
                     </div>
                 </div>
@@ -1615,9 +1615,8 @@
 
         </div>
     </div>
-    </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         // Configuration
         const TOTAL_TIME = 60 * 60; // 60 minutes in seconds
         const TOTAL_SECTIONS = 9;
@@ -1906,9 +1905,4 @@
             doc.save(fileName);
             
             // Actualizar asunto del correo en el modal
-            document.getElementById('emailSubject').textContent = 'Prueba Psicotecnica - ' + nombre;
-            
-            // Cerrar modales anteriores y mostrar modal de éxito
-            closeModal('confirmModal');
-            closeModal('timeoutModal');
-            openModal('successModal');
+            document.getElementById('emailSubject').te
