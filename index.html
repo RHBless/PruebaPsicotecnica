@@ -1547,72 +1547,69 @@
 
     <!-- Modal Instrucciones Envío -->
     <div class="modal" id="successModal">
-        <div class="modal-content" style="max-width: 480px; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
-            <!-- Header del Modal -->
-            <div style="background: linear-gradient(135deg, #1A3A52 0%, #2D5A7B 100%); color: white; padding: 20px 24px; text-align: center;">
-                <h2 style="margin: 0; font-size: 18px; font-weight: bold;">✅ PDF Generado</h2>
+        <div class="modal-content" style="max-width: 520px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+            
+            <!-- Header Profesional -->
+            <div style="background: linear-gradient(135deg, #1A3A52 0%, #2D5A7B 100%); padding: 32px 28px; text-align: center;">
+                <div style="font-size: 56px; margin-bottom: 12px;">✅</div>
+                <h2 style="margin: 0; font-size: 22px; font-weight: bold; color: white;">PDF Generado Correctamente</h2>
+                <p style="margin: 8px 0 0 0; font-size: 13px; color: rgba(255,255,255,0.85);">Ahora envialo por correo</p>
             </div>
 
-            <!-- Contenido Compacto -->
-            <div style="padding: 24px; background-color: white;">
+            <!-- Contenido Principal -->
+            <div style="padding: 32px 28px; background: white;">
                 
-                <!-- Paso 1 -->
-                <div style="margin-bottom: 18px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: #4A9FBE; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0;">1</div>
-                        <div>
-                            <p style="margin: 0 0 6px 0; color: #1A3A52; font-size: 13px; font-weight: bold;">Envía al correo</p>
-                            <p style="margin: 0; color: #333; font-size: 12px; font-family: monospace; background: #F5F5F5; padding: 8px; border-radius: 4px;">
-                                Recursoshumanos@organizacionbless.com.co
-                            </p>
-                        </div>
+                <!-- Instruccion 1 -->
+                <div style="margin-bottom: 22px; display: flex; gap: 16px;">
+                    <div style="background: linear-gradient(135deg, #4A9FBE, #2E7BA5); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; flex-shrink: 0;">1</div>
+                    <div style="flex: 1;">
+                        <p style="margin: 0 0 8px 0; color: #1A3A52; font-size: 14px; font-weight: 700;">Copia este correo</p>
+                        <p style="margin: 0; color: #555; font-size: 12px; background: #F8F8F8; padding: 10px 12px; border-radius: 6px; border-left: 3px solid #4A9FBE; font-family: 'Courier New', monospace;">
+                            Recursoshumanos@organizacionbless.com.co
+                        </p>
                     </div>
                 </div>
 
-                <!-- Paso 2 -->
-                <div style="margin-bottom: 18px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: #4A9FBE; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0;">2</div>
-                        <div>
-                            <p style="margin: 0 0 6px 0; color: #1A3A52; font-size: 13px; font-weight: bold;">Asunto</p>
-                            <p id="emailSubject" style="margin: 0; color: #333; font-size: 12px; font-family: monospace; background: #F5F5F5; padding: 8px; border-radius: 4px;">
-                                Prueba Psicotecnica - [Nombre]
-                            </p>
-                        </div>
+                <!-- Instruccion 2 -->
+                <div style="margin-bottom: 22px; display: flex; gap: 16px;">
+                    <div style="background: linear-gradient(135deg, #4A9FBE, #2E7BA5); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; flex-shrink: 0;">2</div>
+                    <div style="flex: 1;">
+                        <p style="margin: 0 0 8px 0; color: #1A3A52; font-size: 14px; font-weight: 700;">Usa este asunto</p>
+                        <p id="emailSubject" style="margin: 0; color: #555; font-size: 12px; background: #F8F8F8; padding: 10px 12px; border-radius: 6px; border-left: 3px solid #4A9FBE; font-family: 'Courier New', monospace;">
+                            Prueba Psicotecnica - Oscar
+                        </p>
                     </div>
                 </div>
 
-                <!-- Paso 3 -->
-                <div style="margin-bottom: 18px;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <div style="background: #4A9FBE; color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 13px; flex-shrink: 0;">3</div>
-                        <div>
-                            <p style="margin: 0 0 6px 0; color: #1A3A52; font-size: 13px; font-weight: bold;">Adjunta el PDF</p>
-                            <p style="margin: 0; color: #555; font-size: 12px;">
-                                El archivo descargado a tu dispositivo
-                            </p>
-                        </div>
+                <!-- Instruccion 3 -->
+                <div style="margin-bottom: 24px; display: flex; gap: 16px;">
+                    <div style="background: linear-gradient(135deg, #4A9FBE, #2E7BA5); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; flex-shrink: 0;">3</div>
+                    <div style="flex: 1;">
+                        <p style="margin: 0 0 8px 0; color: #1A3A52; font-size: 14px; font-weight: 700;">Adjunta el PDF descargado</p>
+                        <p style="margin: 0; color: #666; font-size: 12px;">
+                            Busca el archivo en tu carpeta de descargas y adjuntalo al correo
+                        </p>
                     </div>
                 </div>
 
-                <!-- Advertencia Compacta -->
-                <div style="background-color: #FFF9E6; border-left: 3px solid #FF9800; padding: 10px 12px; border-radius: 4px;">
-                    <p style="margin: 0; color: #D84315; font-size: 11px; line-height: 1.4;">
-                        <strong>⚠️</strong> Verifica que el PDF esté adjunto antes de enviar
+                <!-- Nota Importante -->
+                <div style="background: linear-gradient(135deg, rgba(255,193,7,0.1), rgba(255,152,0,0.05)); border-left: 4px solid #FF9800; border-radius: 6px; padding: 14px 14px; margin-top: 20px;">
+                    <p style="margin: 0; color: #E65100; font-size: 12px; line-height: 1.5; font-weight: 500;">
+                        <strong>💡 Recuerda:</strong> Sin el PDF adjunto, no podemos procesar tu evaluacion
                     </p>
                 </div>
 
             </div>
 
-            <!-- Footer del Modal -->
-            <div style="background-color: #FAFAFA; padding: 16px 24px; border-top: 1px solid #EEE; text-align: center;">
-                <button class="btn-primary" onclick="closeModal('successModal'); location.reload();" style="padding: 10px 32px; font-size: 13px;">Entendido</button>
+            <!-- Footer -->
+            <div style="background: #F5F7FA; padding: 18px 28px; border-top: 1px solid #E8EAED; text-align: center;">
+                <button class="btn-primary" onclick="closeModal('successModal'); location.reload();" style="padding: 11px 36px; font-size: 13px; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; background: linear-gradient(135deg, #1A3A52, #2D5A7B); color: white; transition: all 0.3s;">Entendido</button>
             </div>
 
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Configuration
         const TOTAL_TIME = 60 * 60; // 60 minutes in seconds
         const TOTAL_SECTIONS = 9;
@@ -1901,13 +1898,4 @@
             doc.save(fileName);
             
             // Actualizar asunto del correo en el modal
-            document.getElementById('emailSubject').textContent = 'Prueba Psicotecnica - ' + nombre;
-            
-            // Cerrar modales anteriores y mostrar modal de éxito
-            closeModal('confirmModal');
-            closeModal('timeoutModal');
-            openModal('successModal');
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('emailSubject').textContent = 'Prueba Psicotecnica -
