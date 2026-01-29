@@ -1905,4 +1905,13 @@
             doc.save(fileName);
             
             // Actualizar asunto del correo en el modal
-            document.getElementById('emailSubject').te
+            document.getElementById('emailSubject').textContent = 'Prueba Psicotecnica - ' + nombre;
+            
+            // Cerrar modales anteriores y mostrar modal de éxito
+            closeModal('confirmModal');
+            closeModal('timeoutModal');
+            openModal('successModal');
+        }
+    </script>
+</body>
+</html>
